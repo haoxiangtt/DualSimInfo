@@ -1,0 +1,49 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:25.+'
+}
+
+
+def BASENAME = "dualSimInfo";
+def sdkDestinationPath = "build/outputs/jar/";
+android.libraryVariants.all { variant ->
+    def finalName = "${BASENAME}-${variant.name}-v${variant.mergedFlavor.versionName}"
+    def deleteBuild = tasks.create(name : "delete${variant.name}Jar",
+            type : Delete) {
+        delete "${sdkDestinationPath}${finalName}.jar"
+    }
+    tasks.create(name : "makeJar${variant.name.capitalize()}",
+            dependsOn : [deleteBuild, variant.assemble],
+            type : Jar) {
+//        def zfile = file("build/intermediates/bundles/${variant.name}/classes.jar")
+//        from zipTree(zfile)
+        from "build/intermediates/classes/${variant.name}"
+        baseName finalName
+        destinationDir file(sdkDestinationPath)
+        exclude "android/support/**/*.class"
+        exclude "**/R.class"
+        exclude "**/R\$*.class"
+        include "cn/richinfo/**/*.class"
+    }
+}

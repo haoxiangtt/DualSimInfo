@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">DualSimInfo</string>
+    <string name="read_info">读取手机卡信息</string>
+</resources>
