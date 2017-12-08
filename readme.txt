@@ -1,7 +1,7 @@
-Ë«¿¨ÐÅÏ¢²É¼¯×é¼þËµÃ÷£º
-	1¡¢Ö÷ÒªÀà£ºTelephonyManagement;
-	2¡¢Ö÷Òª½Ó¿Ú£ºgetTelephonyInfo(Context context), »ñÈ¡TelephonyInfoÊµÀý£¬ÀïÃæ·â×°ÁË¸÷ÖÖsim¿¨ÐÅÏ¢£»
-				 updateTelephonyInfo(Context context), ¸üÐÂTelephonyInfoÊµÀýÐÅÏ¢£»
-				 getDualSimChip(Context context), »ñÈ¡sim¿¨ÐÅÏ¢²É¼¯ÀàÊµÀý£¬¿ÉÒÔ×ÔÐÐ»ñÈ¡sim¿¨ÖÐÏëÒªµÄÐÅÏ¢¡£
-	3¡¢¼¯³É·½Ê½£ºÖ±½Óµ¹ÈëÔ´Âë»òÕßÊ¹ÓÃgradleÖÐµÄ´ò°üÈÎÎñ´ò°ü³Éjarµ¼ÈëÏîÄ¿ÖÐ¼´¿É¡£
-	4¡¢ÄÜ¹»Í¨¹ý±¾¹¤¾ß»ñÈ¡µ½Ë«sim¿¨µÄimei¡¢imsi¡¢simState¡¢operator¡¢subId¡¢slotId£¨simId£©¡¢Ä¬ÈÏÉÏÍø¿¨µÈÐÅÏ¢¡£
+åŒå¡ä¿¡æ¯é‡‡é›†ç»„ä»¶è¯´æ˜Žï¼š
+	1ã€ä¸»è¦ç±»ï¼šTelephonyManagement;
+	2ã€ä¸»è¦æŽ¥å£ï¼šgetTelephonyInfo(Context context), èŽ·å–TelephonyInfoå®žä¾‹ï¼Œé‡Œé¢å°è£…äº†å„ç§simå¡ä¿¡æ¯ï¼›
+				 updateTelephonyInfo(Context context), æ›´æ–°TelephonyInfoå®žä¾‹ä¿¡æ¯ï¼›
+				 getDualSimChip(Context context), èŽ·å–simå¡ä¿¡æ¯é‡‡é›†ç±»å®žä¾‹ï¼Œå¯ä»¥è‡ªè¡ŒèŽ·å–simå¡ä¸­æƒ³è¦çš„ä¿¡æ¯ã€‚
+	3ã€é›†æˆæ–¹å¼ï¼šç›´æŽ¥å€’å…¥æºç æˆ–è€…ä½¿ç”¨gradleä¸­çš„æ‰“åŒ…ä»»åŠ¡æ‰“åŒ…æˆjarå¯¼å…¥é¡¹ç›®ä¸­å³å¯ã€‚
+	4ã€èƒ½å¤Ÿé€šè¿‡æœ¬å·¥å…·èŽ·å–åˆ°åŒsimå¡çš„imeiã€imsiã€simStateã€operatorã€subIdã€slotIdï¼ˆsimIdï¼‰ã€é»˜è®¤ä¸Šç½‘å¡ç­‰ä¿¡æ¯ã€‚

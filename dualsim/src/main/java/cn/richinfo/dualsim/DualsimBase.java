@@ -28,8 +28,8 @@ import java.util.List;
 
 /**
  * <pre>
- * @copyright  : Copyright ©2004-2018 版权所有　彩讯科技股份有限公司
- * @company    : 彩讯科技股份有限公司
+ * @copyright  : Copyright ©2004-2018 版权所有　XXXXXXXXXXXXXX
+ * @company    : XXXXXXXXXXXXXXXXXXX
  * @author     : OuyangJinfu
  * @e-mail     : ouyangjinfu@richinfo.cn
  * @createDate : 2017/7/18 0018
@@ -301,8 +301,8 @@ public abstract class DualsimBase {
     @SuppressLint("NewApi")
     public String getImei(int simID) {
         try {
-            if (currentapiVersion > 22) {
-                return mTelephonyManager.getDeviceId(simID);
+            if (currentapiVersion >= 21) {
+                return getReflexData(mTelephonyManager, "getImei", simID);
             } else {
                 return getReflexData(mTelephonyManager, "getDeviceId", simID);
             }

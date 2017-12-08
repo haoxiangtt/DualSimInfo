@@ -7,8 +7,8 @@ import android.util.Log;
 
 /**
  *<pre>
- * @copyright  : Copyright ©2004-2018 版权所有　彩讯科技股份有限公司
- * @company    : 彩讯科技股份有限公司
+ * @copyright  : Copyright ©2004-2018 版权所有　XXXXXXXXXXXXXXXXXXXXXX
+ * @company    : XXXXXXXXXXXXXXXXXX
  * @author     : OuyangJinfu
  * @e-mail     : ouyangjinfu@richinfo.cn
  * @createDate : 2017/3/16 0023
