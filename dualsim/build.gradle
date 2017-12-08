@@ -41,9 +41,9 @@ android.libraryVariants.all { variant ->
         from "build/intermediates/classes/${variant.name}"
         baseName finalName
         destinationDir file(sdkDestinationPath)
-        exclude "android/support*//***/*//*.class"
-        exclude "**//*R.class"
-        exclude "**//*R\$*.class"
-        include "cn/richinfo*//***/*//*.class"
+        exclude "android/support/**/*.class"
+        exclude "**/R.class"
+        exclude "**/R\$*.class"
+        include "cn/richinfo/**/*.class"
     }
 }
