@@ -11,14 +11,14 @@ import java.util.Locale;
 
 /**
  * <pre>
- * @copyright  : Copyright ©2004-2018 版权所有　XXXXXXXXXXXXXXXX
- * @company    : XXXXXXXXXXXXX
+ * copyright  : Copyright ©2004-2018 版权所有　XXXXXXXXXXXXXXXX
+ * company    : XXXXXXXXXXXXX
  * @author     : OuyangJinfu
- * @e-mail     : ouyangjinfu@richinfo.cn
- * @createDate : 2017/7/18 0018
- * @modifyDate : 2017/7/18 0018
+ * e-mail     : ouyangjinfu@richinfo.cn
+ * createDate : 2017/7/18 0018
+ * modifyDate : 2017/7/18 0018
  * @version    : 1.0
- * @desc       : 高通芯片双卡类
+ * desc       : 高通芯片双卡类
  * </pre>
  */
 

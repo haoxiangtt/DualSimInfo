@@ -17,6 +17,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        abortOnError false
+    }
+
 }
 
 dependencies {
@@ -47,3 +51,5 @@ android.libraryVariants.all { variant ->
         include "cn/richinfo/**/*.class"
     }
 }
+
+apply from: 'upload.gradle'

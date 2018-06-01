@@ -7,14 +7,14 @@ import android.util.Log;
 
 /**
  *<pre>
- * @copyright  : Copyright ©2004-2018 版权所有　XXXXXXXXXXXXXXXXXXXXXX
- * @company    : XXXXXXXXXXXXXXXXXX
+ * copyright  : Copyright ©2004-2018 版权所有　XXXXXXXXXXXXXXXXXXXXXX
+ * company    : XXXXXXXXXXXXXXXXXX
  * @author     : OuyangJinfu
- * @e-mail     : ouyangjinfu@richinfo.cn
- * @createDate : 2017/3/16 0023
- * @modifyDate : 2017/3/27 0023
+ * e-mail     : ouyangjinfu@richinfo.cn
+ * createDate : 2017/3/16 0023
+ * modifyDate : 2017/3/27 0023
  * @version     : 1.1
- * @desc       : telephony information utils
+ * desc       : telephony information utils
  *              双卡手机sim卡信息管理器，能够获取与sim卡相关的信息，如imsi、imei、operator等
  *              信息
  *</pre>
@@ -362,6 +362,7 @@ public class TelephonyManagement {
 
     /**
      * Get telephony SIM information
+     * request permission {@link android.Manifest.permission#READ_PHONE_STATE}
      * @param context 上下文
      * @return TelephonyInfo object
      */
@@ -375,6 +376,7 @@ public class TelephonyManagement {
 
     /**
      * Reload telephonyinfo
+     * * request permission {@link android.Manifest.permission#READ_PHONE_STATE}
      * @param context 上下文
      * @return this
      */
@@ -386,7 +388,7 @@ public class TelephonyManagement {
     }
 
     /**
-     *
+     ** request permission {@link android.Manifest.permission#READ_PHONE_STATE}
      * @param context 上下文
      * @return DualsimBase object
      */

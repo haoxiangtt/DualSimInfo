@@ -28,14 +28,14 @@ import java.util.List;
 
 /**
  * <pre>
- * @copyright  : Copyright ©2004-2018 版权所有　XXXXXXXXXXXXXX
- * @company    : XXXXXXXXXXXXXXXXXXX
+ * copyright  : Copyright ©2004-2018 版权所有　XXXXXXXXXXXXXX
+ * company    : XXXXXXXXXXXXXXXXXXX
  * @author     : OuyangJinfu
- * @e-mail     : ouyangjinfu@richinfo.cn
- * @createDate : 2017/7/18 0018
- * @modifyDate : 2017/7/18 0018
+ * e-mail     : ouyangjinfu@richinfo.cn
+ * createDate : 2017/7/18 0018
+ * modifyDate : 2017/7/18 0018
  * @version    : 1.0
- * @desc       : 双卡适配抽象类
+ * desc       : 双卡适配抽象类
  * </pre>
  */
 public abstract class DualsimBase {
@@ -262,6 +262,7 @@ public abstract class DualsimBase {
         return true;
     }
 
+    @SuppressLint("MissingPermission")
     public String getImsi(int simID) {
         /** read imsi */
         try {
@@ -298,7 +299,7 @@ public abstract class DualsimBase {
         return 0;
     }
 
-    @SuppressLint("NewApi")
+    @SuppressLint({"NewApi", "MissingPermission"})
     public String getImei(int simID) {
         try {
             if (currentapiVersion >= 21) {

@@ -9,14 +9,14 @@ import android.util.Log;
 
 /**
  * <pre>
- * @copyright  : Copyright ©2004-2018 版权所有　XXXXXXXXXXXXXXXXXXX
- * @company    : XXXXXXXXXXXXXXXX
+ * copyright  : Copyright ©2004-2018 版权所有　XXXXXXXXXXXXXXXXXXX
+ * company    : XXXXXXXXXXXXXXXX
  * @author     : OuyangJinfu
- * @e-mail     : ouyangjinfu@richinfo.cn
- * @createDate : 2017/7/18 0018
- * @modifyDate : 2017/7/18 0018
+ * e-mail     : ouyangjinfu@richinfo.cn
+ * createDate : 2017/7/18 0018
+ * modifyDate : 2017/7/18 0018
  * @version    : 1.0
- * @desc       : 三星手机双卡类
+ * desc       : 三星手机双卡类
  * </pre>
  */
 

@@ -8,14 +8,14 @@ import android.util.Log;
 
 /**
  * <pre>
- * @copyright  : Copyright ©2004-2018 版权所有　XXXXXXXXXXXXXXXXXXXXXX
- * @company    : XXXXXXXXXXXXXXXXXXX
+ * copyright  : Copyright ©2004-2018 版权所有　XXXXXXXXXXXXXXXXXXXXXX
+ * company    : XXXXXXXXXXXXXXXXXXX
  * @author     : OuyangJinfu
- * @e-mail     : ouyangjinfu@richinfo.cn
- * @createDate : 2017/7/18 0018
- * @modifyDate : 2017/7/18 0018
+ * e-mail     : ouyangjinfu@richinfo.cn
+ * createDate : 2017/7/18 0018
+ * modifyDate : 2017/7/18 0018
  * @version    : 1.0
- * @desc       : 联发科芯片系统双卡类
+ * desc       : 联发科芯片系统双卡类
  * </pre>
  */
 

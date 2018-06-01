@@ -1,0 +1,88 @@
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+//apply plugin: 'com.novoda.bintray-release'
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+def siteUrl = 'https://github.com/haoxiangtt/DualSimInfo'      // 项目的主页
+def gitUrl = 'https://github.com/haoxiangtt/DualSimInfo.git'   // Git仓库的url
+group = "com.bfy"                                     // Maven Group ID for the artifact，一般填你唯一的包名
+version = '1.0.1'
+install {
+    repositories.mavenInstaller {
+        // This generates POM.xml with proper parameters
+        pom {
+            project {
+                packaging 'aar'
+                // Add your description here
+                name 'dual-sim-info'
+                description 'this is catch sim card information util.'
+//                artifactId 'dual-sim-info'
+                url siteUrl
+                // Set your license
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id '10086'     //填写的一些基本信息
+                        name 'haoxiangtt'
+                        email 'ouyangjinfu@richinfo.cn'
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+        }
+    }
+}
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+    configurations = ['archives']
+    pkg {
+        repo = "maven"
+        name = "dual-sim-info"   //发布到JCenter上的项目名字
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = ["Apache-2.0"]
+        publish = true
+    }
+}
+javadoc { //jav doc采用utf-8编码否则会报“GBK的不可映射字符”错误
+    options{
+        encoding "UTF-8"
+        charSet 'UTF-8'
+    }
+}
+
+/*publish {
+    userOrg = 'haoxiangtt'//bintray.com用户名
+    groupId = 'com.bfy'//jcenter上的路径
+    artifactId = 'volley'//项目名称
+    publishVersion = '1.0.0'//版本号
+    desc = 'this is volley.'//描述，不重要
+    website = 'https://github.com/haoxiangtt/EventAndroid'//网站，不重要；尽量模拟github上的地址，例如我这样的；当然你有地址最好了
+}*/
