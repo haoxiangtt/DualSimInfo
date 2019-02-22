@@ -1,4 +1,4 @@
-package cn.richinfo.dualsiminfo.demo.utils;
+package cn.bfy.dualsiminfo.demo.utils;
 
 import android.Manifest.permission;
 import android.app.Activity;
@@ -11,7 +11,7 @@ import android.support.v4.app.ActivityCompat;
  * Title: CalendarController.java </br>
  * Description: 权限操作类,主要供自身业务使用 </br>
  * Copyright: Copyright (c) 2016 </br>
- * Company:深圳彩讯科技有限公司 </br>
+ * Company:XXXXXXXXXXXXXXXX </br>
  *
  * @author
  * @version 1.0

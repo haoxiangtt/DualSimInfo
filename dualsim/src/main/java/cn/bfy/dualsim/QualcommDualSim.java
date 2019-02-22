@@ -1,4 +1,4 @@
-package cn.richinfo.dualsim;
+package cn.bfy.dualsim;
 
 import android.app.PendingIntent;
 import android.content.Context;
@@ -9,12 +9,14 @@ import android.util.Log;
 
 import java.util.Locale;
 
+import cn.richinfo.dualsim.BuildConfig;
+
 /**
  * <pre>
  * copyright  : Copyright ©2004-2018 版权所有　XXXXXXXXXXXXXXXX
  * company    : XXXXXXXXXXXXX
  * @author     : OuyangJinfu
- * e-mail     : ouyangjinfu@richinfo.cn
+ * e-mail     : jinfu123.-@163.com
  * createDate : 2017/7/18 0018
  * modifyDate : 2017/7/18 0018
  * @version    : 1.0

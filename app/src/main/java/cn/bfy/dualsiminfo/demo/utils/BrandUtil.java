@@ -1,4 +1,4 @@
-package cn.richinfo.dualsiminfo.demo.utils;
+package cn.bfy.dualsiminfo.demo.utils;
 
 import android.annotation.SuppressLint;
 import android.os.Build;

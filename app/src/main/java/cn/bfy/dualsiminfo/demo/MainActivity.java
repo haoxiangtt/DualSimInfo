@@ -1,4 +1,4 @@
-package cn.richinfo.dualsiminfo.demo;
+package cn.bfy.dualsiminfo.demo;
 
 import android.Manifest;
 import android.app.Activity;
@@ -28,10 +28,11 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.richinfo.dualsim.DualsimBase;
-import cn.richinfo.dualsim.TelephonyManagement;
-import cn.richinfo.dualsiminfo.demo.utils.PermissionUtils;
-import cn.richinfo.dualsiminfo.demo.utils.TelephonyUtil;
+import cn.bfy.dualsim.DualsimBase;
+import cn.bfy.dualsim.TelephonyManagement;
+import cn.bfy.dualsiminfo.demo.utils.TelephonyUtil;
+import cn.bfy.dualsiminfo.demo.utils.PermissionUtils;
+import cn.richinfo.dualsiminfo.demo.R;
 
 public class MainActivity extends AppCompatActivity {
     private final static String TAG = "DualCard";

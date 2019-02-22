@@ -1,4 +1,4 @@
-package cn.richinfo.dualsim;
+package cn.bfy.dualsim;
 
 import android.app.PendingIntent;
 import android.content.Context;
@@ -7,12 +7,14 @@ import android.telephony.SmsManager;
 import android.text.TextUtils;
 import android.util.Log;
 
+import cn.richinfo.dualsim.BuildConfig;
+
 /**
  * <pre>
  * copyright  : Copyright ©2004-2018 版权所有　XXXXXXXXXXXXXXXXXXX
  * company    : XXXXXXXXXXXXXXXX
  * @author     : OuyangJinfu
- * e-mail     : ouyangjinfu@richinfo.cn
+ * e-mail     : jinfu123.-@163.com
  * createDate : 2017/7/18 0018
  * modifyDate : 2017/7/18 0018
  * @version    : 1.0

@@ -1,4 +1,4 @@
-package cn.richinfo.dualsim;
+package cn.bfy.dualsim;
 
 import android.content.Context;
 import android.telephony.TelephonyManager;
@@ -10,7 +10,7 @@ import android.util.Log;
  * copyright  : Copyright ©2004-2018 版权所有　XXXXXXXXXXXXXXXXXXXXXX
  * company    : XXXXXXXXXXXXXXXXXX
  * @author     : OuyangJinfu
- * e-mail     : ouyangjinfu@richinfo.cn
+ * e-mail     : jinfu123.-@163.com
  * createDate : 2017/3/16 0023
  * modifyDate : 2017/3/27 0023
  * @version     : 1.1

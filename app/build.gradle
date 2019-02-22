@@ -28,6 +28,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
 //    compile files('libs/dualSimInfo-release-v1.0.jar')
-//    compile project(':dualsim')
-    compile 'com.bfy:dualsim:1.0.1'
+    compile project(':dualsim')
+//    compile 'com.bfy:dualsim:1.0.1'
 }
