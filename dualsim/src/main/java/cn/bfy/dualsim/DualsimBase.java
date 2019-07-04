@@ -143,7 +143,7 @@ public abstract class DualsimBase {
             //新增域则需要新增路由,比如有302跳转到其他域下,就需要把location的路由加入.
 
             if (BuildConfig.DEBUG) {
-                Log.e(TAG, "change network result >>> " + resultBool1 );
+                Log.e(TAG, "change network result >>> " + resultBool1);
             }
 
             if (resultBool1) {

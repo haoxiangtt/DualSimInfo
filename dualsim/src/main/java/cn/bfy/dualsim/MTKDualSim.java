@@ -60,6 +60,8 @@ public class MTKDualSim extends DualsimBase {
         mTelephonyInfo.setStateSIM1(getSimState(TYPE_SIM_MAIN));
         mTelephonyInfo.setStateSIM2(getSimState(TYPE_SIM_ASSISTANT));
         mTelephonyInfo.setDefaultDataSlotId(getDefaultDataSlotId(context));
+        mTelephonyInfo.setImeiSIM1(getImei(TYPE_SIM_MAIN));
+        mTelephonyInfo.setImeiSIM2(getImei(TYPE_SIM_ASSISTANT));
         int stateSim1 = mTelephonyInfo.getStateSIM1();
         int stateSim2 = mTelephonyInfo.getStateSIM2();
         if (stateSim1 != 0 && stateSim1 != 1 && stateSim1 != 7 && stateSim1 != 8) {
