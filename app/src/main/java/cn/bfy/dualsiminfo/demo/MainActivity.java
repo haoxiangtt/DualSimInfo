@@ -36,6 +36,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.NetworkInterface;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -316,6 +318,7 @@ public class MainActivity extends AppCompatActivity {
                 " Manufacturer : " + Build.MANUFACTURER + "\n" +
                 " Model : " + Build.MODEL + "\n" +
                 " Mac : " + getAdresseMAC(this) + "\n" +
+                "System Version : " + getSysVersion() + "\n" +
                 " -----------------------------------\n");
         data.append(" -----------------------------------\n");
         Log.e(TAG, data.toString());
@@ -366,7 +369,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String marshmallowMacAddress = "02:00:00:00:00:00";
     private static final String fileAddressMac = "/sys/class/net/wlan0/address";
 
-    public static String getAdresseMAC(Context context) {
+    public String getAdresseMAC(Context context) {
         WifiManager wifiMan = (WifiManager)context.getSystemService(Context.WIFI_SERVICE) ;
         WifiInfo wifiInf = wifiMan.getConnectionInfo();
 
@@ -395,7 +398,7 @@ public class MainActivity extends AppCompatActivity {
         return marshmallowMacAddress;
     }
 
-    private static String getAdressMacByInterface(){
+    private String getAdressMacByInterface(){
         try {
             List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
             for (NetworkInterface nif : all) {
@@ -423,7 +426,7 @@ public class MainActivity extends AppCompatActivity {
         return null;
     }
 
-    private static String getAddressMacByFile(WifiManager wifiMan) throws Exception {
+    private String getAddressMacByFile(WifiManager wifiMan) throws Exception {
         String ret;
         int wifiState = wifiMan.getWifiState();
 
@@ -438,7 +441,7 @@ public class MainActivity extends AppCompatActivity {
         return ret;
     }
 
-    private static String crunchifyGetStringFromStream(InputStream crunchifyStream) throws IOException {
+    private String crunchifyGetStringFromStream(InputStream crunchifyStream) throws IOException {
         if (crunchifyStream != null) {
             Writer crunchifyWriter = new StringWriter();
 
@@ -456,6 +459,24 @@ public class MainActivity extends AppCompatActivity {
         } else {
             return "No Contents";
         }
+    }
+
+    private String getSysVersion(){
+        try {
+            Class<?> cls = Class.forName("android.os.SystemProperties");
+            Method getMethod = cls.getDeclaredMethod("get", String.class);
+            String version = (String) getMethod.invoke(cls, "ro.build.display.id");
+            return version;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
 }
