@@ -2,28 +2,41 @@ package cn.bfy.dualsim;
 
 import android.annotation.SuppressLint;
 import android.app.PendingIntent;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.NetworkRequest;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.annotation.RequiresApi;
 import android.telephony.SmsManager;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.UnknownHostException;
+import java.util.Collections;
 import java.util.List;
 
 import cn.richinfo.dualsim.BuildConfig;
@@ -78,10 +91,13 @@ public abstract class DualsimBase {
 
     protected TelephonyManagement.TelephonyInfo mTelephonyInfo;
 
+    protected Context mContext;
+
     protected DualsimBase (Context context) {
         currentapiVersion = Build.VERSION.SDK_INT;
         mTelephonyManager = ((TelephonyManager) context.
                 getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE));
+        mContext = context.getApplicationContext();
     }
 
     public TelephonyManagement.TelephonyInfo getTelephonyInfo() {
@@ -304,7 +320,9 @@ public abstract class DualsimBase {
     @SuppressLint({"NewApi", "MissingPermission"})
     public String getImei(int simID) {
         try {
-            if (currentapiVersion >= 21) {
+            if (currentapiVersion >= 29) {//android Q 通过计算生成id
+                return getRealDeviceID(mContext);
+            } else if (currentapiVersion >= 21) {
                 return getReflexData(mTelephonyManager, "getImei", simID);
             } else {
                 return getReflexData(mTelephonyManager, "getDeviceId", simID);
@@ -546,6 +564,173 @@ public abstract class DualsimBase {
     @Override
     public String toString() {
         return mTelephonyInfo.toString();
+    }
+
+    /**
+     * 获取的设备ID.
+     *
+     * @param context
+     * @return
+     */
+    @SuppressLint("MissingPermission")
+    private String getRealDeviceID(Context context) {
+        if (null == context) {
+            return "";
+        }
+        // 手机IMEI串号
+        String imeiSerial = "";
+        try {
+            imeiSerial = (String) Build.class.getField("SERIAL").get(null);
+            if (TextUtils.isEmpty(imeiSerial) || imeiSerial.startsWith("000000") || "unknown".equalsIgnoreCase(imeiSerial)) {
+                imeiSerial = Build.SERIAL;
+            }
+        } catch (Exception e) {
+            Log.e("BaseInfoUtils", ">>>get imeiSerial error : ", e);
+        }
+        try {
+            if (TextUtils.isEmpty(imeiSerial) || imeiSerial.startsWith("000000") || "unknown".equalsIgnoreCase(imeiSerial)) {
+                String m_szDevIDShort = "35" + //we make this look like a valid IMEI
+                        Build.BOARD.length() % 10 +
+                        Build.BRAND.length() % 10 +
+                        Build.CPU_ABI.length() % 10 +
+                        Build.DEVICE.length() % 10 +
+                        Build.DISPLAY.length() % 10 +
+                        Build.HOST.length() % 10 +
+                        Build.ID.length() % 10 +
+                        Build.MANUFACTURER.length() % 10 +
+                        Build.MODEL.length() % 10 +
+                        Build.PRODUCT.length() % 10 +
+                        Build.TAGS.length() % 10 +
+                        Build.TYPE.length() % 10 +
+                        Build.USER.length() % 10; //13 digits
+                String m_szBTMAC = "";
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    BluetoothAdapter bAdapt = BluetoothAdapter.getDefaultAdapter();
+                    if (bAdapt != null) {
+                        m_szBTMAC = bAdapt.getAddress();
+                    }
+                } else {
+                    //小米 MI 3	android 4.2.1 BluetoothManager获取异常
+                    BluetoothManager mbluetoothManager = (BluetoothManager) context.getSystemService(Context.BLUETOOTH_SERVICE);
+                    BluetoothAdapter bAdapt = mbluetoothManager.getAdapter();
+                    if (bAdapt != null) {
+                        m_szBTMAC = bAdapt.getAddress();
+                    }
+                }
+                String m_szAndroidID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+                String m_szWLANMAC = getAdresseMAC(context);
+                imeiSerial = m_szDevIDShort + m_szAndroidID + m_szWLANMAC + m_szBTMAC;
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            Log.e("BaseInfoUtils", ">>>getRealDeviceID error : ", e);
+        }
+
+        //如果以上方式还是获取为空或者失败，新增随机ID方式，适配Android10,还未测试暂时注释
+//        if (StringUtil.isBlank(imeiSerial) || imeiSerial.startsWith("000000")) {
+//            imeiSerial = UUID.randomUUID().toString();
+//            DebugLogger.log(EMMLogLevel.ERROR, "BaseInfoUtils", "randomUUID  imeiSerial:"+imeiSerial);
+//        }
+
+        Log.w( "BaseInfoUtils", "getRealDeviceID imeiSerial:" + imeiSerial);
+        return imeiSerial;
+    }
+
+    private static final String marshmallowMacAddress = "02:00:00:00:00:00";
+    private static final String fileAddressMac = "/sys/class/net/wlan0/address";
+
+    @SuppressLint("MissingPermission")
+    public String getAdresseMAC(Context context) {
+        WifiManager wifiMan = (WifiManager)context.getSystemService(Context.WIFI_SERVICE) ;
+        WifiInfo wifiInf = wifiMan.getConnectionInfo();
+
+        if(wifiInf !=null && marshmallowMacAddress.equals(wifiInf.getMacAddress())){
+            String result = null;
+            try {
+                result= getAdressMacByInterface();
+                if (result != null){
+                    return result;
+                } else {
+                    result = getAddressMacByFile(wifiMan);
+                    return result;
+                }
+            } catch (IOException e) {
+                Log.e("MobileAccess", "Erreur lecture propriete Adresse MAC");
+            } catch (Exception e) {
+                Log.e("MobileAcces", "Erreur lecture propriete Adresse MAC ");
+            }
+        } else{
+            if (wifiInf != null && wifiInf.getMacAddress() != null) {
+                return wifiInf.getMacAddress();
+            } else {
+                return "";
+            }
+        }
+        return marshmallowMacAddress;
+    }
+
+    private String getAdressMacByInterface(){
+        try {
+            List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
+            for (NetworkInterface nif : all) {
+                if (nif.getName().equalsIgnoreCase("wlan0")) {
+                    byte[] macBytes = nif.getHardwareAddress();
+                    if (macBytes == null) {
+                        return "";
+                    }
+
+                    StringBuilder res1 = new StringBuilder();
+                    for (byte b : macBytes) {
+                        res1.append(String.format("%02X:",b));
+                    }
+
+                    if (res1.length() > 0) {
+                        res1.deleteCharAt(res1.length() - 1);
+                    }
+                    return res1.toString();
+                }
+            }
+
+        } catch (Exception e) {
+            Log.e("MobileAcces", "Erreur lecture propriete Adresse MAC ");
+        }
+        return null;
+    }
+
+    @SuppressLint("MissingPermission")
+    private String getAddressMacByFile(WifiManager wifiMan) throws Exception {
+        String ret;
+        int wifiState = wifiMan.getWifiState();
+
+        wifiMan.setWifiEnabled(true);
+        File fl = new File(fileAddressMac);
+        FileInputStream fin = new FileInputStream(fl);
+        ret = crunchifyGetStringFromStream(fin);
+        fin.close();
+
+        boolean enabled = WifiManager.WIFI_STATE_ENABLED == wifiState;
+        wifiMan.setWifiEnabled(enabled);
+        return ret;
+    }
+
+    private String crunchifyGetStringFromStream(InputStream crunchifyStream) throws IOException {
+        if (crunchifyStream != null) {
+            Writer crunchifyWriter = new StringWriter();
+
+            char[] crunchifyBuffer = new char[2048];
+            try {
+                Reader crunchifyReader = new BufferedReader(new InputStreamReader(crunchifyStream, "UTF-8"));
+                int counter;
+                while ((counter = crunchifyReader.read(crunchifyBuffer)) != -1) {
+                    crunchifyWriter.write(crunchifyBuffer, 0, counter);
+                }
+            } finally {
+                crunchifyStream.close();
+            }
+            return crunchifyWriter.toString();
+        } else {
+            return "No Contents";
+        }
     }
 
 }
