@@ -10,4 +10,4 @@
 引入方式：compile 'com.bfy:dualsim:1.0.1'
 混淆规则：无
 
-更新说明：目前对Android Q暂只适配了imei的获取，对imsi和数据短信的发送后续有时间再适配。
+更新说明：目前对Android Q暂只适配了imei的获取，对imsi和数据短信的发送后续有时间再适配。（目前由于工作忙最新版的还没上传到jcenter库中，后续有时间会更新一版jsenter库， 敬请谅解!）
